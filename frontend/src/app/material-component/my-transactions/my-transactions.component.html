@@ -1,0 +1,58 @@
+<div class="responsive_table">
+  <table id="dataTables-example" mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
+    <ng-container matColumnDef="Date">
+      <th mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let element">{{ element.date_transaction  | date:'dd/MM/y'}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Libelle">
+      <th mat-header-cell *matHeaderCellDef>Libelle</th>
+      <td mat-cell *matCellDef="let element">{{ element.libelle | titlecase }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Recettes">
+      <th mat-header-cell *matHeaderCellDef>Recettes</th>
+      <td mat-cell *matCellDef="let element">{{ element.recette }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Depenses">
+      <th mat-header-cell *matHeaderCellDef>Depenses</th>
+
+      <td mat-cell *matCellDef="let element">{{ element.depense }}</td>
+    </ng-container>
+    <ng-container matColumnDef="UserName">
+      <th mat-header-cell *matHeaderCellDef>User Name</th>
+
+      <td mat-cell *matCellDef="let element">{{ element.userName }}</td>
+    </ng-container>
+
+
+
+    <ng-container matColumnDef="Edit">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let element" class="action-link">
+        <button
+          mat-icon-button
+          color="primary"
+          matTooltip="Edit"
+          (click)="handleEditAction(element)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button
+          mat-icon-button
+          color="primary"
+          matTooltip="Delete"
+          (click)="handleDeleteAction(element)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+
+
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

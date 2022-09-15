@@ -1,0 +1,49 @@
+<body>
+  <mat-card>
+    <b><span>Dashboard</span></b>
+  </mat-card>
+  <br />
+  <div class="row">
+    <div class="column">
+      <div class="card">
+        <div class="container">
+          <h2 class="title">Total Users:</h2>
+          <h1 class="title">{{ data?.user }}</h1>
+          <p>
+            <button class="button" [routerLink]="['/caisse/user']">
+              View users
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+        <div class="card">
+          <div class="container">
+            <h2 class="title">Total Transactions:</h2>
+            <h1 class="title">{{ data?.transaction }}</h1>
+            <p>
+              <button class="button" [routerLink]="['/caisse/transaction']">
+                View Transactions
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="card">
+          <div class="container">
+            <h2 class="title">Total Bills:</h2>
+            <h1 class="title">{{ data?.bill }}</h1>
+            <p>
+              <button class="button" [routerLink]="['/caisse/bill']">
+                View Bills
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+  </div>
+</body>

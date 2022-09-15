@@ -1,0 +1,94 @@
+<html>
+  <head>
+    <style>
+      .styled-table {
+        width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+  
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+      h4,h3{
+        text-align:center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2 style="text-align: center">Caisse Management System</h2>
+    <table class="styled-table active-row">
+      <tr>
+        <thead>
+        <th>Date</th>
+        <th>Solde</th>
+      </thead>
+      </tr>
+      <tr>
+        <tbody>
+        <td><%= date %></td>
+        <td><%= solde %> DH</td>
+      </tbody>
+      </tr>
+    </table>
+<h4>Brouillard de caisse solde - Au <%= date %> :<%= solde %> DH</h4>
+<br>
+<br>
+    <h3>Caisse Details:</h3>
+    <table class="styled-table">
+      <tr>
+        <thead>
+        <th>Date</th>
+        <th>Libelle</th>
+        <th>Recettes</th>
+        <th>Depenses</th>
+        <th>Solde</th>
+      </thead>
+      </tr>
+      <% if(transactionsDetails.length > 0) { %> 
+        <% transactionsDetails.forEach(transaction => { %>
+<tbody>
+      <tr>
+        <td><%= date %></td>
+        <td><%= transaction.libelle %></td>
+        <td><%= transaction.recette %></td>
+        <td><%= transaction.depense %></td>
+        <td><%= transaction.solde %> DH</td> 
+      </tr>
+    </tbody>
+        <% }); %> 
+      <% }%>
+    </table>
+    <h3>Thank you.</h3>
+  </body>
+</html>

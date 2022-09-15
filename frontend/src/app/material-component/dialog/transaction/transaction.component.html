@@ -1,0 +1,102 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row fxLayout="row">
+    <span class="title-center">{{ dialogData.action }} Transaction</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="transactionForm">
+    <div fxFlex fxLayout="column">
+      <div fxLayout="row wrap">
+        <mat-form-field appearance="fill">
+          <mat-label>Libelle</mat-label>
+          <input type="text" matInput formControlName="libelle" required />
+          <mat-error
+            *ngIf="
+              transactionForm.controls.libelle.touched &&
+              transactionForm.controls.libelle.invalid
+            "
+          >
+            <span *ngIf="transactionForm.controls.libelle.errors.required"
+              >This field is mandatory</span
+            >
+            <span *ngIf="transactionForm.controls.libelle.errors.pattern"
+              >This field is invalid</span
+            >
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row wrap"  *ngIf="!(this.dialogData.action=='Edit')">
+        <mat-form-field appearance="fill">
+          <mat-label>Date</mat-label>
+          <input matInput type="date" matInput formControlName="date_transaction" required />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker> -->
+          <mat-error
+            *ngIf="
+              transactionForm.controls.date_transaction.touched &&
+              transactionForm.controls.date_transaction.invalid
+            "
+          >
+            <span *ngIf="transactionForm.controls.date_transaction.errors.required"
+              >This field is mandatory</span
+            >
+          </mat-error>
+        </mat-form-field>
+
+
+      </div>
+
+      <div fxLayout="row wrap">
+        <mat-form-field appearance="fill">
+          <mat-label>Recettes</mat-label>
+          <input type="text" matInput formControlName="recette" required />
+          <mat-error
+            *ngIf="
+              transactionForm.controls.recette.touched &&
+              transactionForm.controls.recette.invalid
+            "
+          >
+            <span *ngIf="transactionForm.controls.recette.errors.required"
+              >This field is mandatory</span
+            >
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+
+      <div fxLayout="row wrap">
+        <mat-form-field appearance="fill">
+          <mat-label>Depenses</mat-label>
+          <input type="text" matInput formControlName="depense" required />
+          <mat-error
+            *ngIf="
+              transactionForm.controls.depense.touched &&
+              transactionForm.controls.depense.invalid
+            "
+          >
+            <span *ngIf="transactionForm.controls.depense.errors.required"
+              >This field is mandatory</span
+            >
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    (click)="handleSubmit()"
+    [disabled]="!(transactionForm.valid && transactionForm.dirty)"
+  >
+    {{ action }}
+  </button>
+
+  <button mat-raised-button color="primary" mat-dialog-close>Close</button>
+</mat-dialog-actions>

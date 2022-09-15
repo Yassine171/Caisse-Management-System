@@ -1,0 +1,148 @@
+<mat-card>
+  <b>
+    <span>Manage Transactions</span>
+    <button
+      mat-flat-button
+      color="primary"
+      class="float-right"
+      (click)="handleAddAction()"
+    >
+      Add Transaction
+    </button>
+  </b>
+</mat-card>
+
+<hr />
+<mat-card>
+
+  <form [formGroup]="dateForm">
+    <div fxLayout="row">
+    <mat-form-field appearance="fill">
+      <mat-label>Choose a date</mat-label>
+
+      <input matInput type="Date" formControlName="date" required />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-error
+      *ngIf="
+      dateForm.controls.date.touched &&
+      dateForm.controls.date.invalid
+      "
+    >
+      <span *ngIf="dateForm.controls.date.errors.required"
+        >This field is mandatory</span
+      >
+    </mat-error>
+    </mat-form-field>
+    <mat-dialog-actions align="end">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        (click)="applyFilter()"
+        [disabled]="!(dateForm.valid && dateForm.dirty)"
+      >
+        Search
+      </button>
+    </mat-dialog-actions>
+    </div>
+  </form>
+
+</mat-card>
+
+<hr />
+<mat-card class="mt-4">
+
+  <b>
+    <span>Upload Transaction (format csv)</span>
+    <form enctype="multipart/form-data">
+      <div class="mb-3">
+      <input type="file" mat-input="file" name="import-csv"
+      accept="csv" id="csvreport" (change)="fileupload($event)">
+    </div>
+
+  </form>
+  </b>
+</mat-card>
+<hr />
+<hr />
+<mat-card class="mt-4">
+
+  <b>
+    <span>Insert Transactions of day</span>
+    <button
+      mat-flat-button
+      color="primary"
+      class="float-right"
+      [disabled]="disable()"
+      (click)="handleInsertAction()"
+    >
+      Insert Transaction
+    </button>
+  </b>
+</mat-card>
+<hr />
+<mat-card class="mt-4 float-center" *ngIf="!disable()">
+  <b>
+    Brouillard de caisse solde - Au {{ dateForm.value.date }} : {{ soldeTotal[0].totalSolde }}  DH
+  </b>
+</mat-card>
+<hr />
+<div class="responsive_table">
+  <table id="dataTables-example" mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
+    <ng-container matColumnDef="Date">
+      <th mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let element">{{ element.date_transaction  | date:'dd/MM/y'}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Libelle">
+      <th mat-header-cell *matHeaderCellDef>Libelle</th>
+      <td mat-cell *matCellDef="let element">{{ element.libelle | titlecase }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Recettes">
+      <th mat-header-cell *matHeaderCellDef>Recettes</th>
+      <td mat-cell *matCellDef="let element">{{ element.recette }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Depenses">
+      <th mat-header-cell *matHeaderCellDef>Depenses</th>
+
+      <td mat-cell *matCellDef="let element">{{ element.depense }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Solde">
+      <th mat-header-cell *matHeaderCellDef>Solde</th>
+
+      <td mat-cell *matCellDef="let element" >{{ element.solde }}</td>
+    </ng-container>
+
+
+
+    <ng-container matColumnDef="Edit">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let element" class="action-link">
+        <button
+          mat-icon-button
+          color="primary"
+          matTooltip="Edit"
+          (click)="handleEditAction(element)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button
+          mat-icon-button
+          color="primary"
+          matTooltip="Delete"
+          (click)="handleDeleteAction(element)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+
+
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
