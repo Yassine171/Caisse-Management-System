@@ -67,7 +67,7 @@ export class ViewBillComponent implements OnInit {
   }
 
   applyFilter() {
- 
+
     let data = {
       date: this.dateForm.value.date,
     }
@@ -93,6 +93,7 @@ export class ViewBillComponent implements OnInit {
   handleViewAction(value: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
+      solde:value.solde,
       date:value.date,
       transactionsDetails: JSON.parse(value.transactionsDetails),
     };

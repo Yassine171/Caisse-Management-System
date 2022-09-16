@@ -78,6 +78,9 @@ export class ManageTransactionComponent implements OnInit {
     this.transactionService.gettransactions().subscribe(
       (resp: any) => {
         this.ngxService.stop();
+        for (let i = 0; i < resp.data.length-1; i++) {
+          resp.data[i+1].solde=resp.data[i+1].solde+resp.data[i].solde;
+        }
         this.dataSource = new MatTableDataSource(resp.data);
 
    },(error) => {
@@ -269,7 +272,6 @@ fileChangeListener($event: any): void {
     .pipe().subscribe({
       next: (result): void => {
         this.csvRecords = result;
-        console.log("cssv",this.csvRecords);
         for (let i = 0; i < this.csvRecords.length; i++) {
 
           let data = {
@@ -300,7 +302,6 @@ fileChangeListener($event: any): void {
 
       },
       error: (error: NgxCSVParserError): void => {
-        console.log('Error', error);
       }
     });
 

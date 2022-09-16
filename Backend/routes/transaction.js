@@ -24,7 +24,7 @@ router.post("/add", auth.authenticate,  (req, res) => {
 
 router.get("/get", auth.authenticate, (req, res) => {
   let query =
-    "SELECT *,  (SELECT SUM(recette-depense) FROM transaction WHERE date_transaction <= t.date_transaction  and id<=t.id) AS solde FROM transaction AS t  ORDER BY date_transaction ASC;";
+    "SELECT *,(recette-depense) AS solde FROM transaction AS t  ORDER BY date_transaction ASC;";
   connection.query(query, (err, results) => {
     if (!err) {
       return res.status(200).json({ data: results });

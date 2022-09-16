@@ -71,7 +71,6 @@ export class TransactionComponent implements OnInit {
       depense: formData.depense,
       userid: this.tokenPayload.id
     };
-    console.log("date form",data.date_transaction);
 
     this.transactionService.add(data).subscribe(
       (resp: any) => {

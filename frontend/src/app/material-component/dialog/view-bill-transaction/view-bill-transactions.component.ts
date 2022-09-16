@@ -23,7 +23,6 @@ export class ViewBillTransactionsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log("what i get",this.dialogData);
     this.data = this.dialogData;
     this.dataSource = this.data.transactionsDetails;
   }
