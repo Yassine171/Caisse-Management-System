@@ -38,9 +38,9 @@ CREATE TABLE `bill` (
 -- Déchargement des données de la table `bill`
 --
 
-INSERT INTO `bill` (`id`, `date`, `solde`, `transactionsDetails`) VALUES
-(81, '2022-10-02 00:00:00', 52, '[{\"id\":77,\"libelle\":\"updated\",\"date_transaction\":\"2022-10-02T00:00:00.000Z\",\"recette\":100,\"depense\":50,\"userID\":1,\"solde\":\"50\"},{\"id\":78,\"libelle\":\"jkhk\",\"date_transaction\":\"2022-10-02T00:00:00.000Z\",\"recette\":69,\"depense\":67,\"userID\":1,\"solde\":\"52\"}]'),
-(88, '2022-10-01 00:00:00', 10, '[{\"id\":79,\"libelle\":\"iy\",\"date_transaction\":\"2022-10-01T00:00:00.000Z\",\"recette\":12,\"depense\":2,\"userID\":1,\"solde\":\"10\"}]');
+-- INSERT INTO `bill` (`id`, `date`, `solde`, `transactionsDetails`) VALUES
+-- (81, '2022-10-02 00:00:00', 52, '[{\"id\":77,\"libelle\":\"updated\",\"date_transaction\":\"2022-10-02T00:00:00.000Z\",\"recette\":100,\"depense\":50,\"userID\":1,\"solde\":\"50\"},{\"id\":78,\"libelle\":\"jkhk\",\"date_transaction\":\"2022-10-02T00:00:00.000Z\",\"recette\":69,\"depense\":67,\"userID\":1,\"solde\":\"52\"}]'),
+-- (88, '2022-10-01 00:00:00', 10, '[{\"id\":79,\"libelle\":\"iy\",\"date_transaction\":\"2022-10-01T00:00:00.000Z\",\"recette\":12,\"depense\":2,\"userID\":1,\"solde\":\"10\"}]');
 
 -- --------------------------------------------------------
 
@@ -61,10 +61,9 @@ CREATE TABLE `transaction` (
 -- Déchargement des données de la table `transaction`
 --
 
-INSERT INTO `transaction` (`id`, `libelle`, `date_transaction`, `recette`, `depense`, `userID`) VALUES
-(77, 'updated', '2022-10-02', 100, 50, 1),
-(78, 'jkhk', '2022-10-02', 69, 67, 1),
-(79, 'iy', '2022-10-01', 12, 2, 1);
+-- INSERT INTO `transaction` (`id`, `libelle`, `date_transaction`, `recette`, `depense`, `userID`) VALUES
+-- (77, 'updated', '2022-10-02', 100, 50, 1),
+-- (78, 'jkhk', '2022-10-02', 69, 67, 1),
 
 -- --------------------------------------------------------
 
