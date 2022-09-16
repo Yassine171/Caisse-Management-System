@@ -2,12 +2,6 @@ const express = require("express");
 const connection = require("../connection");
  const auth = require("../services/auth");
 const role = require("../services/checkRole");
-const csv = require('fast-csv');
-const multer = require('multer');
-const bodyparser = require('body-parser')
-const path = require('path')
-const fs = require('fs');
-
 const router = express.Router();
 
 router.post("/add", auth.authenticate,  (req, res) => {
@@ -128,49 +122,5 @@ router.delete(
   }
 );
 
-var storage = multer.diskStorage({
-  destination: (req, file, callBack) => {
-    callBack(null, './uploads/')
-  },
-  filename: (req, file, callBack) => {
-    callBack(
-      null,
-      file.fieldname + '-' + Date.now() + path.extname(file.originalname),
-    )
-  },
-})
-var upload = multer({
-  storage: storage,
-})
-
-router.post("/transaction/uploadcsv", upload.single('import-csv'), (req, res) => {
-  csvToDb(__dirname + '/uploads/' + req.file.filename)
-  res.json({
-    msg: 'File successfully inserted!',
-    file: req.file,
-  })
-})
-function csvToDb(csvUrl) {
-  let stream = fs.createReadStream(csvUrl)
-  let collectionCsv = []
-  let csvFileStream = csv
-    .parse()
-    .on('data', function (data) {
-      collectionCsv.push(data)
-    })
-    .on('end', function () {
-      collectionCsv.shift()
-      db.connect((error) => {
-        if (error) {
-        } else {
-          let query = 'insert into transaction (libelle, date_transaction, recette, depense,userID) values(?,?,?,?,?)'
-          db.query(query, [collectionCsv], (error, res) => {
-          })
-        }
-      })
-      fs.unlinkSync(csvUrl)
-    })
-  stream.pipe(csvFileStream)
-}
 
 module.exports = router;

@@ -36,13 +36,9 @@ export class ChangePasswordComponent implements OnInit {
       this.changePasswordForm.controls.newPassword.value !==
       this.changePasswordForm.controls.confirmPassword.value
     ) {
-      console.log( this.changePasswordForm.controls.newPassword.value,
-        this.changePasswordForm.controls.confirmPassword.value);
-      
+
       return true;
     } else {
-      console.log( this.changePasswordForm.controls.newPassword.value,
-        this.changePasswordForm.controls.confirmPassword.value);
       return false;
     }
   }
@@ -65,7 +61,6 @@ export class ChangePasswordComponent implements OnInit {
       },
       (error) => {
         this.ngxService.stop();
-        console.log(error);
         if (error.error?.message) {
           this.responseMessage = error.error?.message;
         } else {

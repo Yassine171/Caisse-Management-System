@@ -1,6 +1,6 @@
 import { BillService } from './../../services/bill.service';
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -13,6 +13,8 @@ import { TransactionComponent } from '../dialog/transaction/transaction.componen
 import {FormControl, FormGroup} from '@angular/forms';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { saveAs } from 'file-saver';
+import { NgxCsvParser, NgxCSVParserError } from 'ngx-csv-parser';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-manage-transaction',
@@ -37,6 +39,8 @@ export class ManageTransactionComponent implements OnInit {
   dateForm: any = UntypedFormGroup;
   responseMessage: any;
   fromDate:any;
+  csvRecords: any;
+  tokenPayload :any;
 
 
   constructor(
@@ -47,11 +51,14 @@ export class ManageTransactionComponent implements OnInit {
     private fb: UntypedFormBuilder,
     private dialog: MatDialog,
     private snackBar: SnackbarService,
-    private router: Router
+    private router: Router,
+    private ngxCsvParser: NgxCsvParser
   ) {}
 
   ngOnInit(): void {
     this.ngxService.start();
+    const token: string = localStorage.getItem('token')!;
+    this.tokenPayload  = jwt_decode(token);
     this.tableData();
     this.tableData();
     this.tableData();
@@ -106,7 +113,13 @@ export class ManageTransactionComponent implements OnInit {
     }
     this.snackBar.openSnackBar(this.responseMessage, GlobalConstants.error);
   });
+ this.getSolde();
+  }
 
+  getSolde(){
+    let data = {
+      date: this.dateForm.value.date,
+    }
   this.transactionService.getsoldeByDate(data).subscribe(
     (resp: any) => {
       this.ngxService.stop();
@@ -132,10 +145,11 @@ export class ManageTransactionComponent implements OnInit {
 
   handleInsertAction(){
     if(this.dataSource.length >0 && this.dateForm.value.date){
-      this.ngxService.start();
+      this.dataSource.date_transaction=this.datepipe.transform(this.dataSource.date_transaction, 'yyyy-MM-dd');      this.ngxService.start();
+      this.getSolde();
       let data = {
          solde:this.soldeTotal[0].totalSolde,
-        date: this.dateForm.value.date,
+        date: this.datepipe.transform(this.dateForm.value.date, 'yyyy-MM-dd'),
         transactionsDetails: JSON.stringify(this.dataSource)
       };
       this.billService.generateReport(data).subscribe(
@@ -244,26 +258,52 @@ downloadFile(fileName: any) {
     );
   }
 
-  fileupload(event :Event) {
-    const target= event.target as HTMLInputElement;
-    if (!target.files?.length) {
-      return;
-  }
-    let file: File = target.files[0] as File;
-    let formData = new FormData();
 
-    formData.append("file", file, file.name);
-    this.transactionService.uploadFile(formData).subscribe(   (resp: any) => {
-      this.ngxService.stop();
-      this.dataSource.push(resp);
-    },(error) => {
-  this.ngxService.stop();
-  if (error.error?.message) {
-    this.responseMessage = error.error?.message;
-  } else {
-    this.responseMessage = GlobalConstants.genericError;
-  }
-  this.snackBar.openSnackBar(this.responseMessage, GlobalConstants.error);
-});}}
+@ViewChild('fileImportInput') fileImportInput: any;
 
+fileChangeListener($event: any): void {
+
+  const files = $event.srcElement.files;
+
+  this.ngxCsvParser.parse(files[0], { header: true, delimiter: ',', encoding: 'utf8' })
+    .pipe().subscribe({
+      next: (result): void => {
+        this.csvRecords = result;
+        console.log("cssv",this.csvRecords);
+        for (let i = 0; i < this.csvRecords.length; i++) {
+
+          let data = {
+          libelle: this.csvRecords[i].libelle,
+          date_transaction:  this.datepipe.transform(this.csvRecords[i].date_transaction, 'yyyy-MM-dd'),
+          recette: this.csvRecords[i].recette,
+          depense: this.csvRecords[i].depense,
+          userid: this.tokenPayload.id
+        };
+        this.transactionService.add(data).subscribe(
+          (resp: any) => {
+            this.responseMessage = resp.message;
+            this.snackBar.openSnackBar(this.responseMessage, 'success');
+            this.fileImportInput.nativeElement.value = "";
+            this.tableData();
+          },
+          (error) => {
+            if (error.error?.message) {
+              this.responseMessage = error.error?.message;
+            } else {
+              this.responseMessage = GlobalConstants.genericError;
+            }
+            this.snackBar.openSnackBar(this.responseMessage, GlobalConstants.error);
+          }
+        );
+        }
+
+
+      },
+      error: (error: NgxCSVParserError): void => {
+        console.log('Error', error);
+      }
+    });
+
+}
+}
 

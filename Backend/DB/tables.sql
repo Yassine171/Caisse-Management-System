@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 16 sep. 2022 à 02:06
+-- Généré le : ven. 16 sep. 2022 à 18:23
 -- Version du serveur : 10.4.24-MariaDB
 -- Version de PHP : 8.1.6
 
@@ -34,14 +34,6 @@ CREATE TABLE `bill` (
   `transactionsDetails` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Déchargement des données de la table `bill`
---
-
--- INSERT INTO `bill` (`id`, `date`, `solde`, `transactionsDetails`) VALUES
--- (81, '2022-10-02 00:00:00', 52, '[{\"id\":77,\"libelle\":\"updated\",\"date_transaction\":\"2022-10-02T00:00:00.000Z\",\"recette\":100,\"depense\":50,\"userID\":1,\"solde\":\"50\"},{\"id\":78,\"libelle\":\"jkhk\",\"date_transaction\":\"2022-10-02T00:00:00.000Z\",\"recette\":69,\"depense\":67,\"userID\":1,\"solde\":\"52\"}]'),
--- (88, '2022-10-01 00:00:00', 10, '[{\"id\":79,\"libelle\":\"iy\",\"date_transaction\":\"2022-10-01T00:00:00.000Z\",\"recette\":12,\"depense\":2,\"userID\":1,\"solde\":\"10\"}]');
-
 -- --------------------------------------------------------
 
 --
@@ -52,18 +44,10 @@ CREATE TABLE `transaction` (
   `id` int(11) NOT NULL,
   `libelle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_transaction` date NOT NULL,
-  `recette` int(11) DEFAULT NULL,
-  `depense` int(11) DEFAULT NULL,
+  `recette` int(11) DEFAULT 0,
+  `depense` int(11) DEFAULT 0,
   `userID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `transaction`
---
-
--- INSERT INTO `transaction` (`id`, `libelle`, `date_transaction`, `recette`, `depense`, `userID`) VALUES
--- (77, 'updated', '2022-10-02', 100, 50, 1),
--- (78, 'jkhk', '2022-10-02', 69, 67, 1),
 
 -- --------------------------------------------------------
 
@@ -120,19 +104,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `bill`
 --
 ALTER TABLE `bill`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT pour la table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

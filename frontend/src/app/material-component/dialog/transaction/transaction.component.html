@@ -52,7 +52,7 @@
       <div fxLayout="row wrap">
         <mat-form-field appearance="fill">
           <mat-label>Recettes</mat-label>
-          <input type="text" matInput formControlName="recette" required />
+          <input type="text" matInput formControlName="recette"  />
           <mat-error
             *ngIf="
               transactionForm.controls.recette.touched &&
@@ -70,7 +70,7 @@
       <div fxLayout="row wrap">
         <mat-form-field appearance="fill">
           <mat-label>Depenses</mat-label>
-          <input type="text" matInput formControlName="depense" required />
+          <input type="text" matInput formControlName="depense"  />
           <mat-error
             *ngIf="
               transactionForm.controls.depense.touched &&

@@ -32,15 +32,15 @@ export class TransactionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
+
     this.transactionForm = this.fb.group({
       libelle: [
         null,
         [Validators.required, Validators.pattern(GlobalConstants.nameRegex)],
       ],
       date_transaction: [null, [Validators.required]],
-      recette: [null ],
-      depense: [null],
+      recette: [0 ],
+      depense: [0],
     });
     const token: string = localStorage.getItem('token')!;
     this.tokenPayload  = jwt_decode(token);
@@ -63,7 +63,6 @@ export class TransactionComponent implements OnInit {
   }
 
   add() {
-    console.log(this.tokenPayload.id)
     let formData = this.transactionForm.value;
     let data = {
       libelle: formData.libelle,
@@ -72,8 +71,7 @@ export class TransactionComponent implements OnInit {
       depense: formData.depense,
       userid: this.tokenPayload.id
     };
-    console.log(formData.date_transaction);
-    console.log(data.date_transaction);
+    console.log("date form",data.date_transaction);
 
     this.transactionService.add(data).subscribe(
       (resp: any) => {

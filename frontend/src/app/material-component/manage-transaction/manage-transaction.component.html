@@ -50,20 +50,15 @@
 </mat-card>
 
 <hr />
-<mat-card class="mt-4">
-
+<mat-card>
   <b>
-    <span>Upload Transaction (format csv)</span>
-    <form enctype="multipart/form-data">
-      <div class="mb-3">
-      <input type="file" mat-input="file" name="import-csv"
-      accept="csv" id="csvreport" (change)="fileupload($event)">
-    </div>
+    <span>Upload Transactions (Format csv)</span>
 
-  </form>
+    <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" (change)="fileChangeListener($event)"
+    accept=".csv" />
   </b>
 </mat-card>
-<hr />
+
 <hr />
 <mat-card class="mt-4">
 

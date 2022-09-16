@@ -30,6 +30,7 @@
     "jquery": "^3.6.1",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
+    "ngx-csv-parser": "^1.2.0",
     "ngx-ui-loader": "^10.0.0",
     "rxjs": "~6.6.0",
     "source-map-generator": "^0.8.0",
